@@ -1,16 +1,30 @@
+USE sakila;
 -- ==============================================
 -- SECCIÓN A) 30 CONSULTAS CON JOIN DE 2 TABLAS
 -- ==============================================
 -- 1:  Para cada actor, muestra el número total de películas en las que aparece; es decir, cuenta cuántas filas de film_actor corresponden a cada actor.
+
+SELECT actor.actor_id, first_name, last_name, COUNT(film_id) FROM actor JOIN film_actor ON actor.actor_id = film_actor.actor_id GROUP BY actor.actor_id, first_name, last_name;
+
 -- 2:  Lista solo los actores que participan en 20 o más películas (umbral alto) con su conteo.
+
+
 -- 3:  Para cada idioma, indica cuántas películas están catalogadas en ese idioma.
+
 -- 4:  Muestra el promedio de duración (length) de las películas por idioma y filtra aquellos idiomas con duración media estrictamente mayor a 110 minutos.
+
 -- 5:  Para cada película, muestra cuántas copias hay en el inventario.
+
 -- 6:  Lista solo las películas que tienen al menos 5 copias en inventario.
+
 -- 7:  Para cada artículo de inventario, cuenta cuántos alquileres se han realizado.
+
 -- 8:  Para cada cliente, muestra cuántos alquileres ha realizado en total.
+
 -- 9:  Lista los clientes con 30 o más alquileres acumulados.
+
 -- 10:  Para cada cliente, muestra el total de pagos (suma en euros/dólares) que ha realizado.
+
 -- 11:  Muestra los clientes cuyo importe total pagado es al menos 200.
 -- 12:  Para cada empleado (staff), muestra el número de pagos que ha procesado.
 -- 13:  Para cada empleado, muestra el importe total procesado.
