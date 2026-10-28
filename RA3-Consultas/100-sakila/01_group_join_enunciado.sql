@@ -6,6 +6,7 @@ USE sakila;
 
 SELECT actor.actor_id, first_name, last_name, COUNT(film_id) FROM actor JOIN film_actor ON actor.actor_id = film_actor.actor_id GROUP BY actor.actor_id, first_name, last_name;
 
+
 -- 2:  Lista solo los actores que participan en 20 o más películas (umbral alto) con su conteo.
 
 
