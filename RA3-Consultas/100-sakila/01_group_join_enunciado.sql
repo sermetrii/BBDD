@@ -6,46 +6,131 @@ USE sakila;
 
 SELECT actor.actor_id, first_name, last_name, COUNT(film_id) FROM actor JOIN film_actor ON actor.actor_id = film_actor.actor_id GROUP BY actor.actor_id, first_name, last_name;
 
-
 -- 2:  Lista solo los actores que participan en 20 o más películas (umbral alto) con su conteo.
 
+SELECT * FROM actor JOIN film_actor JOIN film;
 
 -- 3:  Para cada idioma, indica cuántas películas están catalogadas en ese idioma.
 
+SELECT * FROM language JOIN film;
+
 -- 4:  Muestra el promedio de duración (length) de las películas por idioma y filtra aquellos idiomas con duración media estrictamente mayor a 110 minutos.
+
+SELECT 
+    language.language_id, name, AVG(length)
+FROM
+    film
+        JOIN
+    language ON film.language_id = language.language_id
+GROUP BY language.language_id , name
+HAVING AVG(length) > 110;
+
+-- Error 1111 significa que hay que usar HAVING en vez de WHERE
 
 -- 5:  Para cada película, muestra cuántas copias hay en el inventario.
 
+SELECT film.film_id, title, COUNT(inventory_id) FROM film JOIN inventory ON film.film_id = inventory.film_id GROUP BY film_id;
+
 -- 6:  Lista solo las películas que tienen al menos 5 copias en inventario.
+
+
 
 -- 7:  Para cada artículo de inventario, cuenta cuántos alquileres se han realizado.
 
+
+
 -- 8:  Para cada cliente, muestra cuántos alquileres ha realizado en total.
+
+SELECT customer.first_name, customer.last_name FROM rental JOIN customer;
 
 -- 9:  Lista los clientes con 30 o más alquileres acumulados.
 
+SELECT * FROM;
+
 -- 10:  Para cada cliente, muestra el total de pagos (suma en euros/dólares) que ha realizado.
 
+SELECT * FROM;
+
 -- 11:  Muestra los clientes cuyo importe total pagado es al menos 200.
+
+SELECT * FROM;
+
 -- 12:  Para cada empleado (staff), muestra el número de pagos que ha procesado.
+
+SELECT * FROM;
+
 -- 13:  Para cada empleado, muestra el importe total procesado.
+
+SELECT * FROM;
+
 -- 14:  Para cada tienda, cuenta cuántos artículos de inventario tiene.
+
+SELECT * FROM;
+
 -- 15:  Para cada tienda, cuenta cuántos clientes tiene asignados.
+
+SELECT * FROM;
+
 -- 16:  Para cada tienda, cuenta cuántos empleados (staff) tiene asignados.
+
+SELECT * FROM;
+
 -- 17:  Para cada dirección (address), cuenta cuántas tiendas hay ubicadas ahí (debería ser 0/1 en datos estándar).
+
+SELECT * FROM;
+
 -- 18:  Para cada dirección, cuenta cuántos empleados residen en esa dirección.
+
+SELECT * FROM;
+
 -- 19:  Para cada dirección, cuenta cuántos clientes residen ahí.
+
+SELECT * FROM;
+
 -- 20:  Para cada ciudad, cuenta cuántas direcciones hay registradas.
+
+SELECT * FROM;
+
 -- 21:  Para cada país, cuenta cuántas ciudades existen.
+
+SELECT * FROM;
+
 -- 22:  Para cada idioma, calcula la duración media de películas y muestra solo los idiomas con media entre 90 y 120 inclusive.
+
+SELECT * FROM;
+
 -- 23:  Para cada película, cuenta el número de alquileres que se han hecho de cualquiera de sus copias (usando inventario).
+
+SELECT * FROM;
+
 -- 24:  Para cada cliente, cuenta cuántos pagos ha realizado en 2005 (usando el año de payment_date).
+
+SELECT * FROM;
+
 -- 25:  Para cada película, muestra el promedio de tarifa de alquiler (rental_rate) de las copias existentes (es un promedio redundante pero válido).
+
+SELECT * FROM;
+
 -- 26:  Para cada actor, muestra la duración media (length) de sus películas.
+
+SELECT * FROM;
+
 -- 27:  Para cada ciudad, cuenta cuántos clientes hay (usando la relación cliente->address->city requiere 3 tablas; aquí contamos direcciones por ciudad).
+
+SELECT * FROM;
+
 -- 28:  Para cada película, cuenta cuántos actores tiene asociados.
+
+SELECT * FROM;
+
 -- 29:  Para cada categoría (por id), cuenta cuántas películas pertenecen a ella (sin nombre de categoría para mantener 2 tablas).
+
+SELECT * FROM;
+
 -- 30:  Para cada tienda, cuenta cuántos alquileres totales se originan en su inventario.
+
+SELECT * FROM;
+
 -- ==============================================
 -- SECCIÓN B) 30 CONSULTAS CON JOIN DE 3 TABLAS
 -- ==============================================
