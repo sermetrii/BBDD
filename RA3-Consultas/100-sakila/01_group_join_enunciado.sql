@@ -16,28 +16,20 @@ SELECT * FROM language JOIN film;
 
 -- 4:  Muestra el promedio de duración (length) de las películas por idioma y filtra aquellos idiomas con duración media estrictamente mayor a 110 minutos.
 
-SELECT 
-    language.language_id, name, AVG(length)
-FROM
-    film
-        JOIN
-    language ON film.language_id = language.language_id
-GROUP BY language.language_id , name
-HAVING AVG(length) > 110;
+SELECT language.language_id, name, AVG(length) FROM film JOIN language ON film.language_id = language.language_id GROUP BY language.language_id , name HAVING AVG(length) > 110;
 
 -- Error 1111 significa que hay que usar HAVING en vez de WHERE
-
 -- 5:  Para cada película, muestra cuántas copias hay en el inventario.
 
 SELECT film.film_id, title, COUNT(inventory_id) FROM film JOIN inventory ON film.film_id = inventory.film_id GROUP BY film_id;
 
 -- 6:  Lista solo las películas que tienen al menos 5 copias en inventario.
 
-
+SELECT film.film_id, title, COUNT(inventory_id) FROM film JOIN inventory ON film.film_id = inventory.film_id GROUP BY film_id HAVING COUNT(inventory_id) >= 5;
 
 -- 7:  Para cada artículo de inventario, cuenta cuántos alquileres se han realizado.
 
-
+SELECT inventory.inventory_id, COUNT(rental.rental_id) FROM inventory JOIN rental ON inventory.inventory_id = rental.inventory_id GROUP BY inventory_id;
 
 -- 8:  Para cada cliente, muestra cuántos alquileres ha realizado en total.
 
@@ -53,7 +45,7 @@ SELECT * FROM;
 
 -- 11:  Muestra los clientes cuyo importe total pagado es al menos 200.
 
-SELECT * FROM;
+SELECT * FROM
 
 -- 12:  Para cada empleado (staff), muestra el número de pagos que ha procesado.
 
@@ -65,15 +57,15 @@ SELECT * FROM;
 
 -- 14:  Para cada tienda, cuenta cuántos artículos de inventario tiene.
 
-SELECT * FROM;
+SELECT store.store_id, COUNT(inventory.inventory_id) FROM store JOIN inventory ON store.store_id = inventory.store_id GROUP BY store_id;
 
 -- 15:  Para cada tienda, cuenta cuántos clientes tiene asignados.
 
-SELECT * FROM;
+SELECT store.store_id, COUNT(customer.customer_id) FROM store JOIN customer ON store.store_id = customer.store_id GROUP BY store_id;
 
 -- 16:  Para cada tienda, cuenta cuántos empleados (staff) tiene asignados.
 
-SELECT * FROM;
+SELECT store.store_id, COUNT(staff.staff_id) FROM store JOIN staff ON store.store_id = staff.store_id GROUP BY store_id;
 
 -- 17:  Para cada dirección (address), cuenta cuántas tiendas hay ubicadas ahí (debería ser 0/1 en datos estándar).
 
@@ -81,19 +73,19 @@ SELECT * FROM;
 
 -- 18:  Para cada dirección, cuenta cuántos empleados residen en esa dirección.
 
-SELECT * FROM;
+SELECT address.address_id, address, COUNT(staff.staff_id) FROM address JOIN staff ON address.address_id = staff.address_id GROUP BY address_id;
 
 -- 19:  Para cada dirección, cuenta cuántos clientes residen ahí.
 
-SELECT * FROM;
+SELECT address.address_id, COUNT(customer.customer_id) FROM address JOIN customer ON address.address_id = customer.address_id GROUP BY address_id;
 
 -- 20:  Para cada ciudad, cuenta cuántas direcciones hay registradas.
 
-SELECT * FROM;
+SELECT city.city_id, COUNT(address.address_id) FROM city JOIN address ON city.city_id = address.city_id GROUP BY city_id;
 
 -- 21:  Para cada país, cuenta cuántas ciudades existen.
 
-SELECT * FROM;
+SELECT country.country_id, COUNT(city.city_id) FROM country JOIN city ON country.country_id = city.country_id GROUP BY country_id;
 
 -- 22:  Para cada idioma, calcula la duración media de películas y muestra solo los idiomas con media entre 90 y 120 inclusive.
 
@@ -105,7 +97,7 @@ SELECT * FROM;
 
 -- 24:  Para cada cliente, cuenta cuántos pagos ha realizado en 2005 (usando el año de payment_date).
 
-SELECT * FROM;
+SELECT customer.customer_id, customer.first_name, customer.last_name, COUNT(payment.payment_date) FROM customer JOIN payment ON customer.customer_id = payment.customer_id GROUP BY customer_id;
 
 -- 25:  Para cada película, muestra el promedio de tarifa de alquiler (rental_rate) de las copias existentes (es un promedio redundante pero válido).
 
