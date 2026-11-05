@@ -1,4 +1,9 @@
 USE sakila;
+-- customer: clientes
+-- staff: empleados
+-- rental: alquileres
+-- inventory: inventario
+
 -- ==============================================
 -- SECCIÓN A) 30 CONSULTAS CON JOIN DE 2 TABLAS
 -- ==============================================
@@ -12,7 +17,7 @@ SELECT * FROM actor JOIN film_actor JOIN film;
 
 -- 3:  Para cada idioma, indica cuántas películas están catalogadas en ese idioma.
 
-SELECT * FROM language JOIN film;
+SELECT language.language_id, language.name, COUNT(film.film_id) FROM language JOIN film ON film.language_id = language.language_id GROUP BY language_id;
 
 -- 4:  Muestra el promedio de duración (length) de las películas por idioma y filtra aquellos idiomas con duración media estrictamente mayor a 110 minutos.
 
@@ -37,7 +42,7 @@ SELECT customer.first_name, customer.last_name FROM rental JOIN customer;
 
 -- 9:  Lista los clientes con 30 o más alquileres acumulados.
 
-SELECT * FROM;
+SELECT customer.customer_id, customer.first_name, customer.last_name, COUNT(rental_id) FROM customer JOIN rental ON rental.customer_id = customer.customer_id GROUP BY customer_id HAVING COUNT(rental_id) >= 30;
 
 -- 10:  Para cada cliente, muestra el total de pagos (suma en euros/dólares) que ha realizado.
 
@@ -45,7 +50,7 @@ SELECT * FROM;
 
 -- 11:  Muestra los clientes cuyo importe total pagado es al menos 200.
 
-SELECT * FROM
+SELECT customer.customer_id, customer.first_name, customer.last_name, payment.amount FROM customer JOIN payment ON payment.customer_id = customer.customer_id GROUP BY customer_id HAVING payment.amount >= 200;
 
 -- 12:  Para cada empleado (staff), muestra el número de pagos que ha procesado.
 
@@ -105,7 +110,7 @@ SELECT * FROM;
 
 -- 26:  Para cada actor, muestra la duración media (length) de sus películas.
 
-SELECT * FROM;
+SELECT * FROM actor;
 
 -- 27:  Para cada ciudad, cuenta cuántos clientes hay (usando la relación cliente->address->city requiere 3 tablas; aquí contamos direcciones por ciudad).
 
@@ -121,7 +126,7 @@ SELECT * FROM;
 
 -- 30:  Para cada tienda, cuenta cuántos alquileres totales se originan en su inventario.
 
-SELECT * FROM;
+SELECT store.store_id, COUNT(rental.rental_id) FROM store JOIN inventory ON store.store_id = inventory.store_id JOIN rental ON inventory.inventory_id = rental.inventory_id GROUP BY store_id;
 
 -- ==============================================
 -- SECCIÓN B) 30 CONSULTAS CON JOIN DE 3 TABLAS
