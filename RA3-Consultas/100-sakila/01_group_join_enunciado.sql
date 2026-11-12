@@ -46,7 +46,7 @@ SELECT customer.customer_id, customer.first_name, customer.last_name, COUNT(rent
 
 -- 10:  Para cada cliente, muestra el total de pagos (suma en euros/dólares) que ha realizado.
 
-SELECT * FROM;
+SELECT c.customer_id, c.first_name, c.last_name, SUM(p.amount) AS total_pagos FROM customer c JOIN payment p ON c.customer_id = p.customer_id GROUP BY c.customer_id, c.first_name, c.last_name;
 
 -- 11:  Muestra los clientes cuyo importe total pagado es al menos 200.
 
@@ -54,11 +54,11 @@ SELECT customer.customer_id, customer.first_name, customer.last_name, payment.am
 
 -- 12:  Para cada empleado (staff), muestra el número de pagos que ha procesado.
 
-SELECT * FROM;
+SELECT s.staff_id, s.first_name, s.last_name, COUNT(p.payment_id) AS numero_pagos FROM staff s JOIN payment p ON s.staff_id = p.staff_id GROUP BY s.staff_id, s.first_name, s.last_name;
 
 -- 13:  Para cada empleado, muestra el importe total procesado.
 
-SELECT * FROM;
+SELECT s.staff_id, s.first_name, s.last_name, SUM(p.amount) AS importe_total FROM staff s JOIN payment p ON s.staff_id = p.staff_id GROUP BY s.staff_id, s.first_name, s.last_name;
 
 -- 14:  Para cada tienda, cuenta cuántos artículos de inventario tiene.
 
