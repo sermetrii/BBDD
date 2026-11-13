@@ -46,7 +46,7 @@ SELECT customer.customer_id, customer.first_name, customer.last_name, COUNT(rent
 
 -- 10:  Para cada cliente, muestra el total de pagos (suma en euros/dólares) que ha realizado.
 
-SELECT c.customer_id, c.first_name, c.last_name, SUM(p.amount) AS total_pagos FROM customer c JOIN payment p ON c.customer_id = p.customer_id GROUP BY c.customer_id, c.first_name, c.last_name;
+SELECT c.customer_id, c.first_name, c.last_name, SUM(p.amount) FROM customer c JOIN payment p ON c.customer_id = p.customer_id GROUP BY c.customer_id, c.first_name, c.last_name;
 
 -- 11:  Muestra los clientes cuyo importe total pagado es al menos 200.
 
@@ -54,11 +54,11 @@ SELECT customer.customer_id, customer.first_name, customer.last_name, payment.am
 
 -- 12:  Para cada empleado (staff), muestra el número de pagos que ha procesado.
 
-SELECT s.staff_id, s.first_name, s.last_name, COUNT(p.payment_id) AS numero_pagos FROM staff s JOIN payment p ON s.staff_id = p.staff_id GROUP BY s.staff_id, s.first_name, s.last_name;
+SELECT s.staff_id, s.first_name, s.last_name, COUNT(p.payment_id) FROM staff s JOIN payment p ON s.staff_id = p.staff_id GROUP BY s.staff_id, s.first_name, s.last_name;
 
 -- 13:  Para cada empleado, muestra el importe total procesado.
 
-SELECT s.staff_id, s.first_name, s.last_name, SUM(p.amount) AS importe_total FROM staff s JOIN payment p ON s.staff_id = p.staff_id GROUP BY s.staff_id, s.first_name, s.last_name;
+SELECT s.staff_id, s.first_name, s.last_name, SUM(p.amount) FROM staff s JOIN payment p ON s.staff_id = p.staff_id GROUP BY s.staff_id, s.first_name, s.last_name;
 
 -- 14:  Para cada tienda, cuenta cuántos artículos de inventario tiene.
 
@@ -74,7 +74,7 @@ SELECT store.store_id, COUNT(staff.staff_id) FROM store JOIN staff ON store.stor
 
 -- 17:  Para cada dirección (address), cuenta cuántas tiendas hay ubicadas ahí (debería ser 0/1 en datos estándar).
 
-SELECT * FROM;
+SELECT address, COUNT(*) FROM store GROUP BY address;
 
 -- 18:  Para cada dirección, cuenta cuántos empleados residen en esa dirección.
 
@@ -94,11 +94,11 @@ SELECT country.country_id, COUNT(city.city_id) FROM country JOIN city ON country
 
 -- 22:  Para cada idioma, calcula la duración media de películas y muestra solo los idiomas con media entre 90 y 120 inclusive.
 
-SELECT * FROM;
+SELECT l.name, AVG(f.length) FROM language l JOIN film f ON l.language_id = f.language_id GROUP BY l.name HAVING AVG(f.length) BETWEEN 90 AND 120;
 
 -- 23:  Para cada película, cuenta el número de alquileres que se han hecho de cualquiera de sus copias (usando inventario).
 
-SELECT * FROM;
+SELECT f.title, COUNT(r.rental_id) FROM film f JOIN inventory i ON f.film_id = i.film_id LEFT JOIN rental r ON i.inventory_id = r.inventory_id GROUP BY f.film_id, f.title;
 
 -- 24:  Para cada cliente, cuenta cuántos pagos ha realizado en 2005 (usando el año de payment_date).
 
@@ -106,19 +106,19 @@ SELECT customer.customer_id, customer.first_name, customer.last_name, COUNT(paym
 
 -- 25:  Para cada película, muestra el promedio de tarifa de alquiler (rental_rate) de las copias existentes (es un promedio redundante pero válido).
 
-SELECT * FROM;
+SELECT f.title, AVG(f.rental_rate) FROM film f JOIN inventory i ON f.film_id = i.film_id GROUP BY f.film_id, f.title;
 
 -- 26:  Para cada actor, muestra la duración media (length) de sus películas.
 
-SELECT * FROM actor;
+SELECT actor.actor_id, first_name, last_name, AVG(length) FROM actor JOIN film_actor ON actor.actor_id = film_actor.actor_id JOIN film ON film_actor.film_id = film.film_id GROUP BY actor.actor_id;
 
 -- 27:  Para cada ciudad, cuenta cuántos clientes hay (usando la relación cliente->address->city requiere 3 tablas; aquí contamos direcciones por ciudad).
 
-SELECT * FROM;
+SELECT c.city_id, c.city, COUNT(a.address_id) FROM city c JOIN address a ON c.city_id = a.city_id JOIN customer cu ON a.address_id = cu.address_id GROUP BY c.city_id ORDER BY c.city_id;
 
 -- 28:  Para cada película, cuenta cuántos actores tiene asociados.
 
-SELECT * FROM;
+SELECT f.title, COUNT(fa.actor_id) FROM film f LEFT JOIN film_actor fa ON f.film_id = fa.film_id GROUP BY f.film_id, f.title;
 
 -- 29:  Para cada categoría (por id), cuenta cuántas películas pertenecen a ella (sin nombre de categoría para mantener 2 tablas).
 
